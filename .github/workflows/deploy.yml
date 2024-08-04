@@ -13,26 +13,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build project
-      run: npm run build
-
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
-
-  report-build-status:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-    - name: Report build status
-      run: gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry" --input /dev/null
