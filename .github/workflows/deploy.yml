@@ -29,3 +29,10 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./public
+
+  report-build-status:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: Report build status
+      run: gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry" --input /dev/null
